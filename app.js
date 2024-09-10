@@ -1,3 +1,1 @@
-console.log('Hello World');
-console.log("Муниса");
-console.log("Рахшончон");
+console.log('Hello World')
