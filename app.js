@@ -1,32 +1,29 @@
-// Глобальные переменные
-var theme = "light"; // глобальная переменная с использованием var
-let language = "English"; // глобальная переменная с использованием let
-const maxNotifications = 10; // глобальная константа с использованием const
+// 1. Переменная с использованием var:
+var currentStock = 100; // Текущий запас товара (может изменяться)
 
-// Функция для обновления настроек
-function updateSettings(newTheme, newLanguage, newMaxNotifications) {
-  if (newTheme) {
-    theme = newTheme; // можно изменить значение переменной, объявленной через var
-  }
+// 2. Переменная с использованием let:
+let dailyStock = 0; // Количество поступивших товаров за день (может изменяться)
 
-  if (newLanguage) {
-    language = newLanguage; // можно изменить значение переменной, объявленной через let
-  }
+// 3. Константа с использованием const:
+const maxStock = 500; // Максимальная емкость склада (не может изменяться)
 
-  // const нельзя переопределить, поэтому значение maxNotifications нельзя изменить
-  if (newMaxNotifications) {
-    // maxNotifications = newMaxNotifications; // Это вызовет ошибку
-  }
+// Пример работы с переменными:
+console.log("Текущий запас:", currentStock);
+console.log("Поступившие товары за день:", dailyStock);
+console.log("Максимальная емкость:", maxStock);
 
-  console.log(
-    `Settings updated: theme = ${theme}, language = ${language}, max notifications = ${maxNotifications}`
-  );
+// Поступление новых товаров:
+dailyStock += 50; // Добавьте 50 товаров
+console.log("Поступившие товары за день:", dailyStock);
+
+// Продажа товара:
+currentStock -= 20; // Продали 20 товаров
+console.log("Текущий запас:", currentStock);
+
+// Попытка превысить максимальную емкость склада:
+try {
+  currentStock += 600; // Добавить 600 товаров
+  console.log("Текущий запас:", currentStock); // Эта строка не выполнится
+} catch (error) {
+  console.error("Ошибка: Превышена максимальная емкость склада!");
 }
-
-// Функция для отображения текущих настроек
-const displaySettings = function () {
-  // функция-выражение
-  console.log(
-    `Current settings: theme = ${theme}, language = ${language}, max notifications = ${maxNotifications}`
-  );
-};
