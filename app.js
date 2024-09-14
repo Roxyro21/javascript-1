@@ -1,61 +1,32 @@
-function setUserSettings(theme, language, maxNotifications) {
-  // Используем var для объявления переменных, доступных внутри всей функции
-  var userTheme = theme;
-  var userLanguage = language;
-  var userMaxNotifications = maxNotifications;
+// Глобальные переменные
+var theme = "light"; // глобальная переменная с использованием var
+let language = "English"; // глобальная переменная с использованием let
+const maxNotifications = 10; // глобальная константа с использованием const
 
-  // Функция для обновления темы оформления
-  function updateTheme(newTheme) {
-    // Переменная userTheme доступна внутри внутренней функции
-    userTheme = newTheme;
-    console.log("Текущая тема: " + userTheme);
+// Функция для обновления настроек
+function updateSettings(newTheme, newLanguage, newMaxNotifications) {
+  if (newTheme) {
+    theme = newTheme; // можно изменить значение переменной, объявленной через var
   }
 
-  // Функция для обновления языка интерфейса
-  function updateLanguage(newLanguage) {
-    // Переменная userLanguage доступна внутри внутренней функции
-    userLanguage = newLanguage;
-    console.log("Текущий язык: " + userLanguage);
+  if (newLanguage) {
+    language = newLanguage; // можно изменить значение переменной, объявленной через let
   }
 
-  // Функция для обновления максимального количества уведомлений
-  function updateMaxNotifications(newMaxNotifications) {
-    // Переменная userMaxNotifications доступна внутри внутренней функции
-    userMaxNotifications = newMaxNotifications;
-    console.log("Максимальное количество уведомлений: " + userMaxNotifications);
+  // const нельзя переопределить, поэтому значение maxNotifications нельзя изменить
+  if (newMaxNotifications) {
+    // maxNotifications = newMaxNotifications; // Это вызовет ошибку
   }
 
-  // Функция для отображения текущих настроек
-  function displaySettings() {
-    console.log("Текущие настройки:");
-    console.log("Тема: " + userTheme);
-    console.log("Язык: " + userLanguage);
-    console.log("Максимальное количество уведомлений: " + userMaxNotifications);
-  }
-
-  // Выводим начальные настройки
-  displaySettings();
-
-  // Возвращаем функции для обновления настроек
-  return {
-    updateTheme,
-    updateLanguage,
-    updateMaxNotifications,
-    displaySettings,
-  };
+  console.log(
+    `Settings updated: theme = ${theme}, language = ${language}, max notifications = ${maxNotifications}`
+  );
 }
 
-// Создаем объект с настройками пользователя
-let userSettings = setUserSettings("Светлая", "Русский", 5);
-
-// Обновляем тему оформления
-userSettings.updateTheme("Темная");
-
-// Обновляем язык интерфейса
-userSettings.updateLanguage("Английский");
-
-// Обновляем максимальное количество уведомлений
-userSettings.updateMaxNotifications(10);
-
-// Выводим обновленные настройки
-userSettings.displaySettings();
+// Функция для отображения текущих настроек
+const displaySettings = function () {
+  // функция-выражение
+  console.log(
+    `Current settings: theme = ${theme}, language = ${language}, max notifications = ${maxNotifications}`
+  );
+};
