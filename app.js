@@ -1,23 +1,18 @@
-var currentStock = 100;
-
-let dailyStock = 0
-const maxStock = 500; 
-
-console.log("Текущий запас:", currentStock);
-console.log("Поступившие товары за день:", dailyStock);
-console.log("Максимальная емкость:", maxStock);
-
-
-dailyStock += 50; 
-console.log("Поступившие товары за день:", dailyStock);
-
-
-currentStock -= 20; 
-console.log("Текущий запас:", currentStock);
-
-try {
-  currentStock += 600; 
-  console.log("Текущий запас:", currentStock);
-} catch (error) {
-  console.error("Ошибка: Превышена максимальная емкость склада!");
+function checkAccess(role) {
+  if (role === "admin") {
+    return true;
+  } else if (role === "user") {
+    return true;
+  } else if (role === "can comment") {
+    return true;
+  } else if (role === "viewer") {
+    return true;
+  } else {
+    return false;
+  }
 }
+ console.log(checkAccess('editor'));
+ console.log(checkAccess("can comment"));
+ console.log(checkAccess("guest"));
+ console.log(checkAccess("user"));
+ 
