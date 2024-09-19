@@ -1,15 +1,18 @@
-// # Задача: Обработка статусов
 let getStatusMessage = (status) => {
-  if (status === "error") {
-    return "Не известная ошибка";
-  } else if (status === "pending") {
-    return "Транзакция в ожидании";
-  } else if (status === "success") {
-    return "Транзакция прошла успешно";
-  } else if (status === "feild") {
-    return "Транзакция не прошла успешно";
-  } else return "Неизвестный статус";
+  switch (status) {
+    case "error":
+      return "Не известная ошибка";
+    case "pending":
+      return "Транзакция в ожидании";
+    case "success":
+      return "Транзакция прошла успешно";
+    case "feild":
+      return "Транзакция не прошла успешно";
+    default:
+      return "Неизвестный статус";
+  }
 };
+
 console.log(getStatusMessage("error"));
 console.log(getStatusMessage("pending"));
 console.log(getStatusMessage("success"));
@@ -30,9 +33,7 @@ const newProduct2 = { name: "Iphone", price: 599.99, quantity: 12 };
 console.log(addProduct(products, newProduct2));
 
 // ### Задача: Функция вычисления площади круга
-let calculateCircleArea = (r) => {
-  return Math.PI * r ** 2;
-};
+let calculateCircleArea = (r) => Math.PI * r ** 2;
 console.log(calculateCircleArea(5));
 
 // ### Задача: Функция расчёта скидки
@@ -58,6 +59,7 @@ let calculate = (num1, num2, operator) => {
       return "Ошибка: некорректный оператор";
   }
 };
+
 console.log(calculate(10, 5, "+"));
 console.log(calculate(10, 5, "-"));
 console.log(calculate(10, 5, "*"));
@@ -122,9 +124,23 @@ console.log(getHttpStatusMessage(500));
 console.log(getHttpStatusMessage(325));
 
 // ### Задача: Функция проверки на четность
-let isEven = (int) => {
-  if (int % 2 === 0) return true;
-  else return false;
-};
+let isEven = (int) => int % 2 === 0;
 console.log(isEven(10));
 console.log(isEven(7));
+
+const myCity = {
+  city: "New York",
+  info: {
+    isPopular: true,
+    country: "USA",
+  },
+};
+console.log(myCity.info.isPopular);
+
+delete myCity.info["country"];
+
+console.log(myCity);
+
+myCity.info.myVillage = "GHUSAR";
+
+console.log(myCity);
