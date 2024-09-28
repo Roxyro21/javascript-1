@@ -1,371 +1,263 @@
-// ### Задача: Управление историей в Instagram со статическим свойством и методом
-class InstagramStory {
-  static totalStories = 0;
-  #title;
-  #views = 0;
-  constructor(title) {
-    this.#title = title;
-    this.#views = 0;
-  }
+// ### Задача: Управление заказами такси 1111
 
-  addView() {
-    this.#views += 1;
-    console.log(
-      `История ${this.#title} просмотрена! Общее количество просмотров: ${
-        this.#views
-      }`
-    );
-  }
-  getInfo() {
-    return `История: ${this.#title} \nПросмотров: ${this.#views}`;
-  }
-  static getTotalStories() {
-    return `Общее количество созданных истории ${InstagramStory.totalStories}`;
-  }
-}
-const story1 = new InstagramStory("Мой первый день на море");
-const story2 = new InstagramStory("Закат на пляже");
-
-story1.addView();
-story2.addView();
-console.log(story1.getInfo());
-console.log(InstagramStory.getTotalStories());
-
-// ### Задача: Банковский аудит с использованием приватных свойств
-class BankAccount {
-  #balance;
-  #transactionHistory;
+class TaxiOperator {
   constructor() {
-    this.#balance = 0;
-    this.#transactionHistory = [];
+    this.orders = [];
   }
-  deposit(amount) {
-    this.#balance += amount;
-    this.#transactionHistory.push(`DEPOSIT: $${amount}`);
-    console.log(
-      `На счёт внесено: ${amount} Текущий баланс:${
-        this.#balance + this.#transactionHistory
-      } `
+  addOrder(order) {
+    this.orders.push(order);
+    console.log(`Добавлен заказ: "${order}"`);
+  }
+  removeOrder(index) {
+    const removedOrder = this.orders.splice(index, 1);
+    console.log(`Удален заказ: "${removedOrder[0]}"`);
+  }
+  getLastOrders(count) {
+    const lastOrders = this.orders.slice(-count);
+    console.log(`Последние ${count} заказов:`, lastOrders);
+    return lastOrders;
+  }
+
+  getOrders() {
+    console.log("Текущий список заказов:", this.orders);
+    return this.orders;
+  }
+}
+const taxiOperator = new TaxiOperator();
+taxiOperator.addOrder("Заказ от Анвар, маршрут: А -> В");
+taxiOperator.addOrder("Заказ от Насиба, маршрут: С -> D");
+taxiOperator.addOrder("Заказ от Шахром, маршрут: Е -> F");
+taxiOperator.removeOrder(1);
+taxiOperator.getLastOrders(2);
+taxiOperator.getOrders();
+
+// ### Задача: Операции в кассе магазина
+class CashRegister {
+  constructor() {
+    this.items = [];
+  }
+
+  addItem(name, price, quantity) {
+    this.items.push({ name, price, quantity });
+  }
+
+  removeItem(name) {
+    this.items = this.items.filter((item) => item.name !== name);
+  }
+
+  calculateTotal() {
+    return this.items.reduce(
+      (total, item) => total + item.price * item.quantity,
+      0
     );
   }
-  withdraw(amount) {
-    this.#balance -= amount;
-    this.#transactionHistory.push(`WITHDRAW: $${amount}`);
-    console.log(`Со счёта снято:${amount} Текущий баланс:${this.#balance}`);
-  }
-  getBalance() {
-    return this.#balance;
-  }
-  audit() {
-    console.log("История транзакций");
-    this.#transactionHistory.forEach((value, index) => {
-      console.log(`${index + 1}. ${value}`);
-    });
+
+  getReceipt() {
+    const itemsList = this.items
+      .map((item) => `${item.name}: ${item.quantity} x $${item.price}`)
+      .join("\n");
+    return `${itemsList}\nИтого: $${this.calculateTotal().toFixed(2)}`;
   }
 }
-const myAccount = new BankAccount();
-myAccount.deposit(1000);
-console.log(myAccount.getBalance());
-myAccount.withdraw(300);
-console.log(myAccount.getBalance());
-console.log(`Текущий баланс: $${myAccount.getBalance()}`);
-myAccount.audit();
 
-// ### Задача: Инкапсуляция для персонажей Барби и Кена
+const cashRegister = new CashRegister();
+cashRegister.addItem("Яблоки", 1.5, 3);
+cashRegister.addItem("Бананы", 1.2, 5);
+cashRegister.addItem("Апельсины", 2.0, 2);
+cashRegister.removeItem("Бананы");
+console.log(cashRegister.getReceipt());
 
-class Doll {
-  #name;
-  #age;
-  #outfit;
-
-  constructor(name, age, outfit) {
-    this.#name = name;
-    this.#age = age;
-    this.#outfit = outfit;
-  }
-  getInfo() {
-    return `Имя: ${this.#name}, Возраст: ${this.#age}, Наряд ${this.#outfit}`;
-  }
-  changeOutfit(newOutfit) {
-    this.#outfit = newOutfit;
-    console.log(`${this.#name} сменила наряд на: ${newOutfit}`);
-  }
-}
-const barbie = new Doll("Барби", 25, "розовое платье");
-const ken = new Doll("Кен", 26, "костюм");
-
-console.log(barbie.getInfo());
-console.log(ken.getInfo());
-
-barbie.changeOutfit("синее платье");
-console.log(barbie.getInfo());
-
-// ### Задача: Класс для автомобиля BMW
-class BMW {
-  constructor(model, color, year) {
-    this.model = model;
-    this.color = color;
-    this.year = year;
-    this.mileage = 0;
+// ### Задача: Управление рейсами в аэропорту
+class Airport {
+  constructor() {
+    this.flights = [];
   }
 
-  paint(newColor) {
-    this.color = newColor;
-    console.log(`Цвет автомобиля изменен на: ${newColor}`);
+  addFlight(flightNumber, destination, status) {
+    this.flights.push({ flightNumber, destination, status });
   }
-  drive(distance) {
-    this.mileage += distance;
-    console.log(
-      `Автомобиль проехал ${distance} км. Общий пробег: ${this.mileage} км.`
+
+  findFlight(flightNumber) {
+    return this.flights.find((flight) => flight.flightNumber === flightNumber);
+  }
+
+  filterDelayedFlights() {
+    return this.flights.filter((flight) => flight.status === "delayed");
+  }
+
+  getFlightInfo() {
+    return this.flights.map(
+      (flight) =>
+        `Рейс ${flight.flightNumber} летит в ${flight.destination} - статус: ${flight.status}`
     );
   }
-  startEngine() {
-    console.log(`Двигатель автомобиля ${this.model} запущен.`);
-  }
-  displayInfo() {
-    console.log(`Модель: ${this.model}`);
-    console.log(`Цвет: ${this.color}`);
-    console.log(`Год выпуска: ${this.year}`);
-    console.log(`Пробег: ${this.mileage} км`);
-  }
 }
-const myBMW = new BMW("X5", "Черный", 2020);
-myBMW.displayInfo();
-myBMW.startEngine();
-myBMW.paint("Синий");
-myBMW.drive(120);
-myBMW.displayInfo();
 
-//### Задача: Класс для поста в социальной медиа
+const airport = new Airport();
+airport.addFlight("SU123", "Москва", "on time");
+airport.addFlight("AF456", "Париж", "delayed");
+airport.addFlight("LH789", "Берлин", "on time");
+airport.addFlight("BA101", "Лондон", "delayed");
 
-class Post {
-  constructor(title, content, author) {
-    this.title = title;
-    this.content = content;
-    this.author = author;
-    this.likes = 0;
+console.log(airport.findFlight("AF456"));
+console.log(airport.filterDelayedFlights());
+console.log(airport.getFlightInfo());
+
+// ### Задача: Система авторизации пользователей с использованием Map
+class AuthSystem {
+  constructor() {
+    this.users = new Map();
   }
-
-  updateContent(newContent) {
-    this.content = newContent;
-    console.log(`Текст поста обновлен: ${newContent}`);
-  }
-
-  addLike() {
-    this.likes++;
-    console.log(`Посту добавлен лайк. Всего лайков: ${this.likes}`);
-  }
-
-  deletePost() {
-    this.title = "";
-    this.content = "";
-    this.author = "";
-    this.likes = 0;
-    console.log("Пост был удален.");
-  }
-
-  displayPost() {
-    if (this.title && this.content && this.author) {
-      console.log(`Пост: ${this.title}`);
-      console.log(`Автор: ${this.author}`);
-      console.log(`Текст: ${this.content}`);
-      console.log(`Лайков: ${this.likes}`);
+  register(username, password, name, email) {
+    if (this.users.has(username)) {
+      console.log(`Пользователь "${username}" уже существует.`);
     } else {
-      console.log("Пост был удален.");
+      this.users.set(username, { password, name, email });
+      console.log(`Пользователь "${username}" зарегистрирован.`);
     }
   }
-}
-const post1 = new Post(
-  "Мой первый пост",
-  "Это мой первый пост в социальной сети!",
-  "Roxy Shaddy"
-);
-post1.displayPost();
-post1.addLike();
-post1.updateContent("Обновленный текст моего первого поста.");
-post1.displayPost();
-post1.deletePost();
-post1.displayPost();
-
-//### Задача: Полиморфизм в игре Prince of Persia
-class Character {
-  constructor(name, health) {
-    this.name = name;
-    this.health = health;
+  login(username, password) {
+    const user = this.users.get(username);
+    if (user && user.password === password) {
+      console.log(`Добро пожаловать, ${user.name}.`);
+    } else {
+      console.log(`Неверные данные для "${username}".`);
+    }
   }
-
-  attack() {
-    console.log(`${this.name} атакует!`);
+  getUserInfo(username) {
+    const user = this.users.get(username);
+    return user
+      ? `Пользователь: ${user.name}, Email: ${user.email}`
+      : `Пользователь не найден.`;
   }
 }
-class Prince extends Character {
-  attack() {
-    console.log(`${this.name} наносит удар мечом!`);
-  }
-}
+const authSystem = new AuthSystem();
+authSystem.register(`rakhshon.shpdizoda@mail.ru`, "Roxyr2115", "Roxy");
+authSystem.register("user2", "mypassword", "Bob");
 
-class Enemy extends Character {
-  attack() {
-    console.log(`${this.name} наносит удар мечом`);
-  }
-}
-function executeAttack(Character) {
-  Character.attack();
-}
+// ### Задача: Очередь в банке для консультации
 
-const prince = new Prince("Принц", 100);
-const enemy = new Enemy("Враг", 80);
+class BankQueue {
+  constructor() {
+    this.queue = [];
+  }
 
-executeAttack(prince);
-executeAttack(enemy);
+  addClient(name) {
+    this.queue.push(name);
+    console.log(`Клиент ${name} добавлен в очередь.`);
+  }
 
-// ### Задача: Наследование классов для игроков команды Real Madrid
-class Player {
-  constructor(name, position, number) {
-    this.name = name;
-    this.position = position;
-    this.number = number;
+  serveClient() {
+    const servedClient = this.queue.shift();
+    return servedClient ? `Клиент ${servedClient} обслужен.` : "Очередь пуста.";
   }
-  getInfo() {
-    return `Игрок ${this.name}, \nПозиция: ${this.position}, \nНомер: ${this.number}`;
-  }
-}
-class RealMadridPlayer extends Player {
-  constructor(name, position, number, contractYears) {
-    super(name, position, number);
-    this.contractYears = contractYears;
-  }
-  getContractInfo() {
-    return `Контракт на ${this.contractYears} лет с Real Madrid`;
+
+  getQueue() {
+    return this.queue.length
+      ? `Текущая очередь: ${this.queue.join(", ")}`
+      : "Очередь пуста.";
   }
 }
 
-const player1 = new RealMadridPlayer("Карим Бензема", "Нападющий", 9, 3);
-const player2 = new RealMadridPlayer("Лука Модрич", "Полузащитник", 10, 2);
+const bankQueue = new BankQueue();
 
-console.log(player1.getInfo());
-console.log(player1.getContractInfo());
+bankQueue.addClient("Иван");
+bankQueue.addClient("Анна");
+bankQueue.addClient("Сергей");
+console.log(bankQueue.serveClient());
+console.log(bankQueue.getQueue());
 
-console.log(player2.getInfo());
-console.log(player2.getContractInfo());
+bankQueue.addClient("Мария");
+console.log(bankQueue.serveClient());
+console.log(bankQueue.getQueue());
 
-// ### Задача: Управление рилсами в социальной медии
+// ### Задача: Обнаружение мошенничества для мобильных кошельков  
 
-class Reel {
-  constructor(title, duration) {
-    this.title = title;
-    this.duration = duration;
-    this.likes = 0;
-    this.views = 0;
+class FraudDetector {
+  constructor() {
+    this.transactions = [];
   }
 
-  like() {
-    this.likes++;
-    console.log(
-      `Рилс "${this.title}" получил лайк! Общее количество лайков: ${this.likes}`
-    );
+ static addTransaction(amount, type) {
+    const transaction = {
+      amount: amount,
+      type: type,
+      isFlagged: false,
+    };
+    this.transactions.push(transaction);
+    console.log(`Транзакция на сумму ${amount} типа "${type}" добавлена.`);
   }
 
-  addView() {
-    this.views++;
-    console.log(
-      `Рилс "${this.title}" просмотрен! Общее количество просмотров: ${this.views}`
-    );
+  flagLargeTransactions(limit) {
+    this.transactions.forEach((transaction) => {
+      if (transaction.amount > limit) {
+        transaction.isFlagged = true;
+        console.log(
+          `Транзакция на сумму ${transaction.amount} помечена как подозрительная.`
+        );
+      }
+    });
   }
 
-  getInfo() {
-    return `Рилс: ${this.title}\nДлительность: ${this.duration} секунд\nЛайков: ${this.likes}\nПросмотров: ${this.views}`;
-  }
-}
-const myReel = new Reel("Мой первыйпервый рилс", 30);
-myReel.like();
-myReel.addView();
-console.log(myReel.getInfo());
-
-// ### Задача: Полиморфизм в модели транспортных средств
-
-class Transport {
-  move() {
-    console.log("Транспорт движется");
+  getFlaggedTransactions() {
+    return this.transactions.filter((transaction) => transaction.isFlagged);
   }
 }
 
-class Car extends Transport {
-  move() {
-    console.log("Машина едет по дороге");
-  }
-}
+const fraudDetector = new FraudDetector();
 
-class Bicycle extends Transport {
-  move() {
-    console.log("Велосипед едет по тротуару");
-  }
-}
+fraudDetector.addTransaction(500, "debit");
+fraudDetector.addTransaction(1500, "credit");
+fraudDetector.addTransaction(2500, "debit");
 
-function startTransport(transport) {
-  transport.move();
-}
+fraudDetector.flagLargeTransactions(1000);
+const flagged = fraudDetector.getFlaggedTransactions();
+console.log(flagged);
 
-const myCar = new Car();
-const myBicycle = new Bicycle();
+// ### Задача: Управление курсами по JavaScript для студентов
+// class JavaScriptCourse {
+//   constructor() {
+//     this.students = [];
+//   }
 
-startTransport(myCar);
-startTransport(myBicycle);
+//   addStudent(name, grades) {
+//     this.students.push({ name, grades });
+//     console.log(`Студент ${name} добавлен с оценками: ${grades}`);
+//   }
 
-class YouTubeVideo {
-  // Конструктор для инициализации заголовка и начальных значений
-  constructor(title) {
-    this.#title = title;
-    this.#likes = 0;
-    this.#dislikes = 0;
-    this.#views = 0;
-  }
+//   getAverageGrades() {
+//     return this.students.map((student) => {
+//       const avgGrade =
+//         student.grades.reduce((sum, grade) => sum + grade, 0) /
+//         student.grades.length;
+//       return { name: student.name, average: avgGrade };
+//     });
+//   }
 
-  #title;
-  #likes;
-  #dislikes;
-  #views;
+//   getStudentsAboveAverage(threshold) {
+//     return this.getAverageGrades().filter(
+//       (student) => student.average > threshold
+//     );
+//   }
 
-  like() {
-    this.#likes += 1;
-    console.log(
-      `Видео "${this.#title}" получило лайк! Общее количество лайков: ${
-        this.#likes
-      }`
-    );
-  }
+//   allStudentsPassed(passingGrade) {
+//     return this.students.every((student) =>
+//       student.grades.every((grade) => grade >= passingGrade)
+//     );
+//   }
+// }
 
-  dislike() {
-    this.#dislikes += 1;
-    console.log(
-      `Видео "${this.#title}" получило дизлайк! Общее количество дизлайков: ${
-        this.#dislikes
-      }`
-    );
-  }
+// const jsCourse = new JavaScriptCourse();
 
-  addView() {
-    this.#views += 1;
-    console.log(
-      `Видео "${this.#title}" просмотрено! Общее количество просмотров: ${
-        this.#views
-      }`
-    );
-  }
+// jsCourse.addStudent("Alice", [85, 90, 78]);
+// jsCourse.addStudent("Bob", [60, 75, 70]);
+// jsCourse.addStudent("Charlie", [95, 92, 88]);
 
-  getInfo() {
-    return `Видео: ${this.#title}\nЛайков: ${this.#likes}\nДизлайков: ${
-      this.#dislikes
-    }\nПросмотров: ${this.#views}`;
-  }
-}
+// console.log("Средние оценки студентов:", jsCourse.getAverageGrades());
 
-const myVideo = new YouTubeVideo("Урок JavaScript");
+// console.log(
+//   "Студенты с оценками выше 80:",
+//   jsCourse.getStudentsAboveAverage(80)
+// );
 
-myVideo.like();
-
-myVideo.dislike();
-
-myVideo.addView();
-
-console.log(myVideo.getInfo());
+// console.log("Все студенты прошли курс:", jsCourse.allStudentsPassed(75));
