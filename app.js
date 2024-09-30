@@ -171,30 +171,20 @@ bankQueue.addClient("Мария");
 console.log(bankQueue.serveClient());
 console.log(bankQueue.getQueue());
 
-// ### Задача: Обнаружение мошенничества для мобильных кошельков  
-
+// ### Задача: Обнаружение мошенничества для мобильных кошельков
 class FraudDetector {
   constructor() {
     this.transactions = [];
   }
 
- static addTransaction(amount, type) {
-    const transaction = {
-      amount: amount,
-      type: type,
-      isFlagged: false,
-    };
-    this.transactions.push(transaction);
-    console.log(`Транзакция на сумму ${amount} типа "${type}" добавлена.`);
+  addTransaction(amount, type) {
+    this.transactions.push({ amount, type, isFlagged: false });
   }
 
   flagLargeTransactions(limit) {
     this.transactions.forEach((transaction) => {
       if (transaction.amount > limit) {
         transaction.isFlagged = true;
-        console.log(
-          `Транзакция на сумму ${transaction.amount} помечена как подозрительная.`
-        );
       }
     });
   }
@@ -211,53 +201,263 @@ fraudDetector.addTransaction(1500, "credit");
 fraudDetector.addTransaction(2500, "debit");
 
 fraudDetector.flagLargeTransactions(1000);
+
 const flagged = fraudDetector.getFlaggedTransactions();
 console.log(flagged);
 
 // ### Задача: Управление курсами по JavaScript для студентов
-// class JavaScriptCourse {
-//   constructor() {
-//     this.students = [];
-//   }
+class JavaScriptCourse {
+  constructor() {
+    this.students = [];
+  }
 
-//   addStudent(name, grades) {
-//     this.students.push({ name, grades });
-//     console.log(`Студент ${name} добавлен с оценками: ${grades}`);
-//   }
+  addStudent(name, grades) {
+    this.students.push({ name, grades });
+  }
 
-//   getAverageGrades() {
-//     return this.students.map((student) => {
-//       const avgGrade =
-//         student.grades.reduce((sum, grade) => sum + grade, 0) /
-//         student.grades.length;
-//       return { name: student.name, average: avgGrade };
-//     });
-//   }
+  getAverageGrades() {
+    return this.students.map((student) => {
+      const average =
+        student.grades.reduce((sum, grade) => sum + grade, 0) /
+        student.grades.length;
+      return { name: student.name, average: average.toFixed(2) };
+    });
+  }
 
-//   getStudentsAboveAverage(threshold) {
-//     return this.getAverageGrades().filter(
-//       (student) => student.average > threshold
-//     );
-//   }
+  getStudentsAboveAverage(threshold) {
+    return this.getAverageGrades().filter(
+      (student) => student.average > threshold
+    );
+  }
 
-//   allStudentsPassed(passingGrade) {
-//     return this.students.every((student) =>
-//       student.grades.every((grade) => grade >= passingGrade)
-//     );
-//   }
-// }
+  allStudentsPassed(passingGrade) {
+    return this.students.every((student) =>
+      student.grades.every((grade) => grade >= passingGrade)
+    );
+  }
+}
 
-// const jsCourse = new JavaScriptCourse();
+const jsCourse = new JavaScriptCourse();
 
-// jsCourse.addStudent("Alice", [85, 90, 78]);
-// jsCourse.addStudent("Bob", [60, 75, 70]);
-// jsCourse.addStudent("Charlie", [95, 92, 88]);
+jsCourse.addStudent("Alice", [85, 90, 78]);
+jsCourse.addStudent("Bob", [60, 75, 70]);
+jsCourse.addStudent("Charlie", [95, 92, 88]);
 
-// console.log("Средние оценки студентов:", jsCourse.getAverageGrades());
+console.log("Средние оценки студентов:", jsCourse.getAverageGrades());
+console.log(
+  "Студенты с оценками выше 80:",
+  jsCourse.getStudentsAboveAverage(80)
+);
+console.log("Все студенты прошли курс:", jsCourse.allStudentsPassed(75));
 
-// console.log(
-//   "Студенты с оценками выше 80:",
-//   jsCourse.getStudentsAboveAverage(80)
-// );
+// ### Задача: Управление балансом клиентов мобильного оператора
+class MobileOperator {
+  constructor() {
+    this.clients = [];
+  }
 
-// console.log("Все студенты прошли курс:", jsCourse.allStudentsPassed(75));
+  addClient(name, balance) {
+    this.clients.push({ name, balance });
+  }
+
+  sortClientsByBalance() {
+    this.clients.sort((a, b) => a.balance - b.balance);
+  }
+
+  reverseClientList() {
+    this.clients.reverse();
+  }
+
+  getClientList() {
+    return this.clients.map((client) => `${client.name}: ${client.balance}`);
+  }
+}
+
+const mobileOperator = new MobileOperator();
+
+mobileOperator.addClient("Иван", 100);
+mobileOperator.addClient("Анна", 200);
+mobileOperator.addClient("Сергей", 50);
+mobileOperator.addClient("Мария", 150);
+
+mobileOperator.sortClientsByBalance();
+mobileOperator.reverseClientList();
+
+console.log(mobileOperator.getClientList());
+
+// ### Задача: Управление списком дел в полицейском участке
+
+class PoliceStation {
+  constructor() {
+    this.cases = [];
+  }
+
+  addCase(caseNumber, suspectName, status) {
+    this.cases.push({ caseNumber, suspectName, status });
+  }
+
+  findCaseByNumber(caseNumber) {
+    return (
+      this.cases.find((c) => c.caseNumber === caseNumber) || "Дело не найдено"
+    );
+  }
+
+  findCaseBySuspectName(suspectName) {
+    return (
+      this.cases.find((c) => c.suspectName === suspectName) || "Дело не найдено"
+    );
+  }
+
+  getAllCases() {
+    return this.cases.map(
+      (c) => `Дело №${c.caseNumber}: ${c.suspectName}, статус: ${c.status}`
+    );
+  }
+}
+
+const policeStation = new PoliceStation();
+
+policeStation.addCase(101, "Анвар Холиков", "расследуется");
+policeStation.addCase(102, "Рухшона Давлатова", "открыто");
+policeStation.addCase(103, "Сомон Усмонов", "закрыто");
+
+console.log(policeStation.findCaseByNumber(102));
+console.log(policeStation.findCaseBySuspectName("Иван Иванов"));
+console.log(policeStation.getAllCases());
+
+// ### Задача: Управление товарами в интернет-магазине
+
+class Product {
+  constructor(name, price, category) {
+    this.name = name;
+    this.price = price;
+    this.category = category;
+  }
+
+  getDetails() {
+    return `${this.name} (${this.category}) - $${this.price}`;
+  }
+}
+
+class Electronics extends Product {
+  constructor(name, price, warranty) {
+    super(name, price, 'Electronics');
+    this.warranty = warranty;
+  }
+
+  getDetails() {
+    return `${super.getDetails()}, гарантия: ${this.warranty} года`;
+  }
+}
+
+class Clothing extends Product {
+  constructor(name, price, size) {
+    super(name, price, 'Clothing');
+    this.size = size;
+  }
+
+  getDetails() {
+    return `${super.getDetails()}, размер: ${this.size}`;
+  }
+}
+
+class Book extends Product {
+  constructor(name, price, author) {
+    super(name, price, 'Book');
+    this.author = author;
+  }
+
+  getDetails() {
+    return `${super.getDetails()}, автор: ${this.author}`;
+  }
+}
+
+class Store {
+  constructor() {
+    this.products = [];
+  }
+
+  addProduct(product) {
+    this.products.push(product);
+  }
+
+  listProducts() {
+    this.products.forEach(product => {
+      console.log(product.getDetails());
+    });
+  }
+
+  filterByCategory(category) {
+    return this.products.filter(product => product.category === category);
+  }
+
+  mapProducts() {
+    return this.products.map(product => ({
+      name: product.name,
+      price: product.price
+    }));
+  }
+}
+
+const store = new Store();
+
+store.addProduct(new Electronics('Ноутбук', 1500, 2));
+store.addProduct(new Clothing('Футболка', 20, 'M'));
+store.addProduct(new Book('JavaScript для начинающих', 30, 'Джон Доу'));
+
+console.log('Все товары:');
+store.listProducts();
+
+console.log('\nТовары категории Electronics:');
+console.log(store.filterByCategory('Electronics'));
+
+console.log('\nТовары (названия и цены):');
+console.log(store.mapProducts());
+
+// ### Задача: Управление отчетами о продаже квартир с использованием Set
+
+class SalesReport {
+  constructor() {
+    this.sales = new Set();
+  }
+
+  addSale(propertyId, saleDate) {
+    const sale = `${propertyId}-${saleDate}`;
+    if (this.sales.has(sale)) {
+      console.log("Запись о продаже уже существует.");
+    } else {
+      this.sales.add(sale);
+      console.log("Запись добавлена.");
+    }
+  }
+
+  removeSale(propertyId, saleDate) {
+    const sale = `${propertyId}-${saleDate}`;
+    if (this.sales.has(sale)) {
+      this.sales.delete(sale);
+      console.log("Запись удалена.");
+    } else {
+      console.log("Запись не найдена.");
+    }
+  }
+
+  getAllSales() {
+    return Array.from(this.sales);
+  }
+
+  getSalesCount() {
+    return this.sales.size;
+  }
+}
+
+const salesReport = new SalesReport();
+
+salesReport.addSale("Apartment1", "2024-09-01");
+salesReport.addSale("Apartment2", "2024-09-05");
+salesReport.addSale("Apartment1", "2024-09-01"); // Дубликат
+salesReport.addSale("Apartment3", "2024-09-10");
+
+salesReport.removeSale("Apartment2", "2024-09-05");
+
+console.log("Все уникальные записи о продаже:", salesReport.getAllSales());
+console.log("Количество уникальных записей:", salesReport.getSalesCount());
